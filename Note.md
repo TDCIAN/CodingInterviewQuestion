@@ -56,6 +56,20 @@
 - Address of a Variables
   - C언어에서 참조 연산자(address-of: &)를 사용하여 변수의 주소를 얻을 수 있습니다. 아래는 변수 X의 주소를 찍는 코드입니다. 일반적으로 주소 값이 클 경우 간단하고 쉽게 이해하도록 16진수로 출력됩니다.
 
+
+### 1.6 포인터(Pointers)
+- 포인터는 다른 변수의 주소를 보관할 수 있는 변수입니다.
+- 포인터의 선언(Declare of Pointers)
+  - 포인터를 선언하기 위해서는 포인터가 가리킬 변수의 자료형을 명시해야 합니다.
+  - 즉, 주소를 저장하고자 하는 변수에 대한 자료형이 필요합니다.
+  - 포인터 선언의 예시
+```
+int *ptr1;
+float *ptr2;
+unsigned int *ptr3;
+char *ptr4; void *ptr5;
+```
+
 ## Chapter 02. INTRODUCTION
 
 ## Chapter 03. 재귀와 역추적
