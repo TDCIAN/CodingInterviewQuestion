@@ -68,7 +68,16 @@ int *ptr1;
 float *ptr2;
 unsigned int *ptr3;
 char *ptr4; void *ptr5;
+
+=> ptr1은 int형 변수를 가리킬 수 있는 포인터이고 
+ptr2는 float형을, 
+ptr3은 unsigned int형을,
+ptr4는 char형을 가리킬 수 있는 포인터입니다.
+끝으로 ptr5는 형을 지정하지 않아 무엇이든지 가리킬 수 있는 포인터입니다. 이러한 포인터를 void형 포인트라고 부르는데 void형 포인터는 몇 가지 제약이 있습니다.
 ```
+- 포인터의 사용(Pointers Usages)
+  - 포인터는 주소를 담습니다. 즉, 변수의 주소를 할당할 수 있습니다.
+
 
 ## Chapter 02. INTRODUCTION
 
