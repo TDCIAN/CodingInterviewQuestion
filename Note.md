@@ -173,6 +173,30 @@ printf("function2 of 0 is : %d\n", fptr(10));
 - 끝으로 fptr이 function2를 가리키도록 한 후, 똑같은 방법으로 function2가 인자 10을 가지고 실행한 결과를 출력합니다.
 ```
 
+### 1.7 파라미터 전달 기법(Parameter Passing Techniques)
+- 실제 변수와 형식 변수(Actual and Formal Parameters)
+  - 함수 B()가 다른 함수 A()에 의해 호출된다고 가정해 봅시다.
+  - 이 경우, A는 "호출자 함수(caller function)" 그리고 호출된 B는 "피호출 함수 혹은 피호출자 함수(callee function)"라 부릅니다.
+  - 또한 A가 B에게 보내는 인자를 "실제 매개 변수(actual argument)"라하며, B함수의 파라미터는 "형식 매개 변수(formal argument)"라 합니다.
+
+```
+- func은 main 함수에서 호출됩니다.
+- main 함수는 호출자 함수이고 func은 피호출자 함수입니다.
+- 또한 func의 인자 param1과 param2는 형식 매개변수이고 main 함수의 i, j는 실제 매개 변수입니다.
+
+int main() {
+  long i = 1;
+  double j = 2;
+  func(i, j); // 실제 매개 변수 i, j와 함께 func 함수 호출
+}
+
+// 형식 매개 변수를 통한 func 함수 선언
+void func(long param1, double param2) {
+}
+```
+
+
+
 ## Chapter 02. INTRODUCTION
 
 ## Chapter 03. 재귀와 역추적
