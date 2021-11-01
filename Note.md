@@ -201,6 +201,21 @@ void func(long param1, double param2) {
   - 출(OUT): 피호출자가 호출자 내에 값을 쓸 수 있습니다.형식 매개 변수는 피호출자는 실제 매개 변수를 통해 값을 전달할 수 있지만 실제 매개 변수를 통해 값을 얻을 수는 없습니다.
   - 입/출(IN/OUT): 호출자는 피호출자에 의해 갱신이 가능한 변수의 값을 전달합니다. 형식 매개 변수는 실제 매개 변수에서 값을 획득하거나 전달할 수 있습니다.
 
+- 언어별 파라미터 
+  - 전달 기법 지원
+    - Pass by value
+      - 지원 언어: C, Pascal, Ada, Scheme, Algol68
+    - Pass by result
+      - 지원 언어: Ada
+    - Pass by value-result
+      - 지원 언어: Fortran, sometimes Ada
+    - Pass by reference
+      - 지원 언어: C(포인터를 사용), Fortran, Pascal var params, Cobol
+    - Pass by name
+      - 지원 언어: Algol60
+
+
+
 
 ## Chapter 02. INTRODUCTION
 
