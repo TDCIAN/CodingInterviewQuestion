@@ -316,6 +316,30 @@ int main(void) {
 => func 함수에서 a = 10, b = 5, main 함수에서 x = 10, y = 5
 ```
 
+  - 참조에 의한 전달(Pass by Reference)
+    - 이 방법은 의미적으로 IN/OUT 방식의 특성을 사용합니다.
+    - 형식 매개 변수는 실제 매개 변수의 별칭이며, 형식 매개 변수에 대한 수정은 전달된 실제 매개 변수에도 영향을 줍니다.
+    - 이 방법은 흔히 "참조에 의한 호출(call by reference or aliasing)"이라고 불립니다.
+    - 이 방법은 할당 공간과 시간에 있어서 효율적입니다.
+    - 이 방식의 단점은 다음과 같습니다.
+      - 수많은 잠재적인 경우가 발생할 수 있습니다.
+      - 프로그램 가독성이 떨어집니다.
+```
+- C언어에서 함수가 호출될 때 포인터 값과 함께 포인터 파라미터가 초기화됩니다.
+- 참조로 전달되기 때문에 함수 swapnum()을 호출하면 실제 매개 변수 a, b도 변경됩니다.
+void swapnum(int *I, int *j) {
+  int temp=I; i=j; j=temp;
+}
+
+int main(void) {
+  int a=10, b=20;
+  swapnum(&a, &b);
+  printf("A is %d and B is %d\n", a, b);
+  return 0;
+}
+=> A는 20, B는 10
+```
+
 ## Chapter 02. INTRODUCTION
 
 ## Chapter 03. 재귀와 역추적
