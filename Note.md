@@ -641,6 +641,65 @@ int main() {
 - b에 d를 할당할 때 d의 i와 j만이 b의 i와 j로 복사되고 k는 복사되지 않습니다.
 - 이 영향으로 객체 d는 잘림이 발생하게 됩니다.
 ```
+  
+문제 5. C++에서 가상 함수(virtual function)를 설명하세요
+- 함수 호출이 일어나면 C++은 컴파일 시 함수 호출에 맞는 함수 정의를 연결합니다.
+- 이것을 정적 바인딩이라고 부릅니다.
+- 컴파일러는 실행 시 함수 호출과 알맞은 함수 정의를 연결하도록 정의할 수 있는데, 이를 동적 바인딩이라고 합니다.
+- 특정 함수에 대해 동적 바인딩을 사용하고자 할 때 'virtual'이라는 키워드를 사용합니다.
+  
+```
+- 정적 바인딩 예시
+class A {
+  void f() {
+    cout << "Base class A" << endl;
+  }  
+};
+  
+class B: A {
+  void f() {
+    cout << "Derived Class B" << endl;
+  }
+};
+
+void g(A& arg) {
+  arg.f();  
+}
+  
+int main() {
+  B x;
+  g(x);
+}
+
+=> 출력 결과: Class A
+- 함수 g()가 호출되면 인자가 B의 인스턴스에 대한 참조자라 해도 A::f()가 호출됩니다.
+- 컴파일 시,컴파일러는 g() 함수의 인자가 A로부터 파생된 객체에 대한 참조여야 한다는 것만을 알고 있을 뿐 인자가 A의 인스턴스에 대한 참조인지 B의 인스턴스에 대한 참조인지를 알 수 없습니다.
+- 그러나 실행 시점에는 알 수 있습니다.
+```
+  
+```
+class A {
+  virtual void f() {
+    cout << "Base class A" << endl;
+  }  
+};
+  
+class B: A {
+  void f() {
+    cout << "Derived Class B" << endl;
+  }
+};
+
+void g(A& arg) {
+  arg.f();  
+}
+  
+int main() {
+  B x;
+  g(x);
+}
+=> 출력 결과: Class B
+```
 
 ## Chapter 02. INTRODUCTION
 
