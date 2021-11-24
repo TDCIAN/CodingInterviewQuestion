@@ -790,6 +790,14 @@ interface InterfaceClass {
 - Java의 HashMap은 이전의 HashMap 크기의 두 배 크기의 또 다른 새로운 버킷 배열을 생성한 후 여기에 이전의 모든 요소들을 밀어 넣습니다.
 - 또한 새로운 버킷의 위치를 찾기 위해 해시 함수를 적용하기 때문에 이 과정과 절차를 rehashing이라고 부릅니다.
   
+
+문제 10. Java에서 HashMap과 HashTable의 차이점은 무엇입니까?
+1. HashMap 클래스는 비동기면서 null이 허용된다는 것을 제외하면 HashTable과 거의 비슷합니다(HashMap은 키와 값에 null을 허용하지만 HashTable은 null을 허용하지 않습니다)
+2. HashMap은 맵의 순서가 시간이 지나도 일정하게 유지된다고 보장할 수 없습니다.
+3. HashMap은 비동기인 반면 Hash Table은 동기입니다.
+4. HashMap 내 Iterator는 fail-fast로, 다른 스레드가 Iterator 자체의 remove() 메소드를 제외하고 맵에 항목을 추가하거나 제거하여 구조적으로 변경하면 ConcurrentModificationException을 던지지만 HashTable의 enumerator는 그렇지 않습니다. 그러나 이것은 항상 보장된 동작은 아니며, JVM에 의해 최선책으로 수행됩니다.
+  
+  
   
   
   
