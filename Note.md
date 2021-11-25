@@ -799,6 +799,16 @@ interface InterfaceClass {
   
   
   
+문제 11. Java에서 스레드와 동기화 동작을 설명하세요
+- Java는 프로그램 실행을 완료하기 위해 여러 스레드를 동시에 실행하는 다중 스레드 언어이므로 동기화는 중요한 개념입니다.
+- Java에서 동기화는 'synchronized', 'volatile'이라는 키워드를 사용하여 구현합니다.
+- 요약하자면 Java의 synchronized 키워드는 '동시 프로그램 작성(concurrent programming)'을 위한 다음 핵심 기능을 제공합니다.
+  - Java에서 synchronized 키워드는 공유 자원의 상호 배타적인 접근을 보장하고 데이터 경합(data race)을 방지하는 잠금(locking)을 제공합니다.
+  - 또한, synchronized 키워드는 synchronized 혹은 volatile 키워드를 사용하지 않을 경우 미묘한 동시처리(concurrent) 문제를 초래할 수 있는 컴파일러에 의한 코드 재배열(reordering)을 방지합니다.
+  - synchronized 키워드는 잠금(locking)과 잠금 풀기(unlocking)를 수반합니다. 스레드는 synchronized 메소드 또는 블록에 진입하기 전에 잠금을 획득해야 합니다.
+  - 이때 캐시가 아닌 메인 메모리에서 데이터를 읽고 잠금을 해지할 때 메모리 불일치 오류를 제거하기 위해 메인 메모리 쓰기 작업을 합니다.
+  
+  
   
   
   
