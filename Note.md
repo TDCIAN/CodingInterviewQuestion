@@ -808,11 +808,57 @@ interface InterfaceClass {
   - synchronized 키워드는 잠금(locking)과 잠금 풀기(unlocking)를 수반합니다. 스레드는 synchronized 메소드 또는 블록에 진입하기 전에 잠금을 획득해야 합니다.
   - 이때 캐시가 아닌 메인 메모리에서 데이터를 읽고 잠금을 해지할 때 메모리 불일치 오류를 제거하기 위해 메인 메모리 쓰기 작업을 합니다.
   
+- 자바에서Synchronized 키워드: 
+  - Java에서 synchronized 블록에 작성된 코드는 상호 배타적이며 한번에 한 스레드에 의해서만 실행될 수 있습니다.
+  - Java에서는 정적 synchronized 메소드와 비정적 synchronized 메소드 그리고 synchronized 블록을 가질 수 있지만 synchronized 변수는 가질 수 없습니다.
+  - synchronized 키워드를 사용한 변수는 잘못된 것으로 컴파일 에러가 발생합니다.
+  - Java는 synchronized 변수 대신 volatile 변수를 제공합니다.
+  - 이는 volatile 선언된 변수를 메인 메모리에서 읽어와 로컬에 캐시하지 않도록 JVM 스레드에 지시합니다.
+  - Java에서 함수 전체 대신 코드의 핵심 영역만 잠글 수 있기 때문에 메소드 동기화보다는 블록 동기화가 선호됩니다.
+  - Java 동기화는 성능 문제를 동반하기 때문에 반드시 동기화가 필요한 부분만을 synchronized 키워드로 묶어 사용해야 합니다.
+
+- synchronized 메소드 예제:
+  - synchronized 키워드를 메소드에 사용하는 방법은 단순히 메소드 앞에 synchronized 키워드를 적용하면 됩니다.
+  - 단지 주의할 점은 정적 synchronized 메소드는 클래스 객체를 잠그며 비정적 메소드는 현재 객체(this)를 잠근다는 것입니다.
+  - 따라서 Java의 정적 혹은 비정적 메소드는 병렬 실행이 가능합니다.
+  - 이것은 네이티브 개발자가 Java의 synchronized 코드를 작성할 때 겪는 공통적인 실수입니다.
   
+```
+public Class Counter {
+  private static int count = 0;
+  public static synchronized int getCount() {
+    return count;
+  }
+  public synchronized setCount (int count) {
+    this.count = count;
+  }
+}
+- 위 Java 동기화 코드 예제는 getCount()와 setCount() 메소드가 동일한 객체의 잠금을 획득하지 않아 병렬 실행으로 잘못된 count를 획득할 수 있기 때문에 제대로 동기화되지 않습니다.
+- 예제에서 getCount() 메소드는 Counter.class를 잠그는 반면 setCount() 메소드는 현재 객체(this)를 잠글 것입니다.
+- 이 코드를 제대로 동기화하고 싶다면 두 메소드 모두 정적 혹은 비정적이어야 하거나 synchronized 메소드가 아닌 synchronized 블록을 사용해야 합니다.
+```
   
+- synchronized 블록 예제
+  - synchronized 블록 사용은 synchronized 메소드의 사용과 매우 유사합니다.
+  - 여기서 중요한 것은 코드의 synchronized 블록을 잠그기 위해 객체가 사용되면 예제에서 Singleton.class는 null일 때 synchronized 블록은 NullPointerException을 던질 것입니다.
   
-  
-  
+```
+public class Singleton {
+  private static volatile Singleton _instance;
+  public static Singleton getInstance() {
+    if(_instance == null) {
+      synchronized(Singleton.class) {
+        if(_instance == null)
+        _instance = new Singleton();
+      }
+    }
+    return _instance;
+  }
+}
+- 예제는 싱글톤(Singleton) 패턴에서 "double checked locking"의 오래된 예입니다
+- 이 예에서 만일 전체 메소드를 동기화한다면 이 메소드를 호출할 때 마다 잠기지만, 실제로는 처음 인스턴스를 생성할 때만 잠금이 필요하기 때문에 핵심적인 영역만 동기화하여 일부 성능을 개선하였습니다.
+```
+
   
 ## Chapter 02. INTRODUCTION
 
