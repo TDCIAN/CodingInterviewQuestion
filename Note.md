@@ -859,6 +859,30 @@ public class Singleton {
 - 이 예에서 만일 전체 메소드를 동기화한다면 이 메소드를 호출할 때 마다 잠기지만, 실제로는 처음 인스턴스를 생성할 때만 잠금이 필요하기 때문에 핵심적인 영역만 동기화하여 일부 성능을 개선하였습니다.
 ```
 
+synchronized 키워드의 중요 사항
+  1. Synchronized 키워드는 Java의 멀티스레드 환경에서 공유되는 리소스에 대한 상호 배타적인 접근을 제공하기 위해 사용됩니다. Java에서 동기화는 두 개의 스레드가 동시에 동일한 잠금이 필요한 동기화된 메소드를 실행하지 않도록 한다는 것을 보장합니다.
+  2. Synchronized 키워드는 메소드 혹은 블록에만 사용할 수 있습니다.
+  3. 스레드가 synchronized 메소드 또는 블록에 진입할 때마다 잠금을 획득하고 synchronized 메소드 혹은 블록을 빠져나갈 때마다 잠금을 해제합니다. synchronized 메소드가 완료되거나 에러 혹은 예외가 발생하여 빠져나가더라도 잠금은 해지됩니다.
+  4. Java 스레드는 인스턴스 synchronized 메소드에 진입할 때 객체(object) 레벨의 잠금을 획득하고 정적 synchronized 메소드에 진입할 때 클래스 레벨의 잠금을 획득합니다.
+  5. Java의 synchronized 키워드는 재진입 속성을 가지고 있습니다. 이는 synchronized 메소드가 동일한 잠금이 필요한 다른 synchronized 메소드를 호출하면 잠금을 가진 현재 스레드가 새로운 잠금을 획득할 필요 없이 해당 메소드로 진입할 수 있음을 의미합니다.
+  6. synchronized 블록에서 사용된 객체가 null일 경우 동기화는 NullPointerException을 던질 것입니다. 예를 들어 synchronized(myInstance)에서 myInstance가 null일 경우 NullPointException을 던질 것입니다.
+  7. Java synchronized 키워드의 주요 단점은 java.util.concurrent.locks.ReentrantLock을 사용하여 구현할 수 있는 동시 읽기(concurrent read)를 허용하지 않는다는 것입니다.
+  8. Java synchronized 키워드의 한 가지 제약 사항은 동일한 JVM 내 공유되는 객체의 접근 제어에만 사용할 수 있다는 것입니다. 하나 이상의 JVM에서 공유되는 파일 시스템 혹은 데이터베이스의 동기화된 접근이 필요하다면 Java synchronized 키워드는 전혀 쓸모가 없으며, 이를 위한 포괄적인 잠금 유형을 구현해야 합니다.
+  9. synchronized 키워드는 성능 비용 저하를 초래합니다. 동기화된 메소드는 매우 느리며 성능을 저하시킵니다. 따라서 Java에서 동기화를 사용할 때는 반드시 필요한 경우에 그리고 사용하더라도 동기화가 필요한 핵심적인 영역에 대한 synchronized 블록을 고려해야 합니다.
+  10. 원하는 코드의 핵심적인 영역만 잠그고 성능을 저하시킬 수 있는 메소드 전체 잠금을 피하는 Java synchronized 블록이 synchronized 메소드보다 좋은 방법입니다. 이 개념과 관련한 Java 동기화의 좋은 예가 앞에서 봤던 Singleton 클래스의 getInstance() 메소드의 예입니다.
+  11. 정적 synchronized 메소드와 비정적 synchronized 메소드 모두 서로 다른 객체를 잠그기 때문에 동시에 실행할 가능성이 있습니다.
+  12. Java synchronized 코드는 동기화가 잘못 구현되었을 경우, 멀티 스레드가 접근할 때 교착 상태 혹은 기아 상태를 유발할 수 있습니다. 어떻게 교착 상태를 피할 수 있는지는 여기 기술된 내용들을 잘 숙지하세요.
+  13. JLS(Java Language Specification)에 따르면 synchronized 키워드를 생성자에 함께 사용할 수 없습니다. 사용할 경우 사용 자체가 잘못된 것이며 에러를 유발할 수 있습니다. 논리적으로 본다면 다른 스레드에서 해당 스레드가 객체생성을 끝낼 때까지 생성된 객체를 볼 수 없기 때문에 생성자에 synchronized 키워드를 사용할 수 없습니다.
+  14. Java의 변수에 synchronized 키워드를 사용할 수 없으며 메소드에 volatile 키워드를 사용할 수 없습니다.
+  15. 좀더 복잡한 프로그램을 작성하기 위해 Java.util.concurrent.locks 패키지는 synchronized 키워드에 의해 제공되는 기능을 확장합니다. Reentrancy 그리고 interruptible locks와 같은 더 많은 기능을 제공합니다.
+  16. Java synchronized 키워드는 메모리 역시 동기화합니다.
+  17. Java에서 동기화와 관련된 중요한 메소드들은 Object 클래스에 정의되어 있는 wait(), notify() 그리고 notifyAll()입니다.
+  18. synchronized 블록 내에서 final이 아닌 필드를 동기화해서는 안됩니다. final이 아닌 필드의 참조는 언제든지 바뀔 수 있으며 그런 후 다른 스레드는 다른 객체를 동기화하게 됩니다. 즉, 동기화가 되지 않습니다.
+  19. synchronized 블록에서 잠금으로 String 객체를 사용하지 않을 것을 권합니다. String은 immutable 객체며 literal string과 interned string은 String pool에 저장됩니다. 따라서 만일 코드의 다른 부분이나 서드 파티 라이브러리가 같은 문자열을 잠금으로 사용한다면 서로 상관 없음에도 불구하고 모두 같은 객체를 잠기게 되어 결과적으로 이상 현상이 발생하거나 혹은 성능이 저하의 원인이 될 수 있습니다. 동기화를 위해 String 객체 대신 Java synchronized 블록에 새로운 Object()를 사용할 것을 권장합니다.
+  20. Calendar와 SimpleDataFormat 같은 Java 라이브러리 클래스들은 다중 스레드 환경에서 안전하지 않으며 다중 스레드 환경에서 사용되기 위해서는 부수적인 동기화가 필요합니다.
+  
+  
+  
   
 ## Chapter 02. INTRODUCTION
 
