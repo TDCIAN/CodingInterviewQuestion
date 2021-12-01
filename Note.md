@@ -894,6 +894,15 @@ synchronized 키워드의 중요 사항
 - 또 다른 예가 v[i] = i++; 그리고 f(v[i], i++);와 같은 구문입니다.
 - 결과가 정해져 있지 않은 이유는 함수 인수의 값을 구하는 순서가 정해지지 않았기 때문입니다.
   
+
+문제 15. Java에서 String과 StringBuffer 클래스의 차이점은 무엇입니까?
+- Java는 StringBuffer와 String 클래스를 제공하며 String 클래스는 변경되지 않는 문자열을 다루는데 사용됩니다.
+- String 형의 객체는 단지 읽기 전용이며 immutable입니다.
+- StringBuffer 클래스는 수정 가능한 문자들을 나타내는데 사용됩니다.
+- 두 클래스간의 현저한 성능의 차이는 문자열을 간단히 연결할 때 StringBuffer가 String보다 빠르다는 것입니다.
+- String 클래스를이용한코드에서 문자열은 일반적인 방식으로 연결됩니다.
+  
+  
   
   
   
